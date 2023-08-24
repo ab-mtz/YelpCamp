@@ -4,8 +4,13 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/yelp-camp')
+mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+    userNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+});
 
+const db = mongoose.connection;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
