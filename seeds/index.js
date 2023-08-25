@@ -14,7 +14,7 @@ db.once("open", () => {
     console.log("Database conected");
 })
 
-const sample = array => Math.floor(Math.random() * 1000);
+const sample = array => array[Math.floor(Math.random() * array.length)];
 
 
 const seedDB = async () => {
