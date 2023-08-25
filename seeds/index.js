@@ -1,6 +1,7 @@
-const express = require('express');
-const path = require('path');
+
 const mongoose = require('mongoose');
+const cities = require('./cities');
+const {places, descriptors} = require('./seedHelpers');
 const Campground = require('./models/campground')
 
 //I had an error trying to conect trough this path: localhost:27017
@@ -17,24 +18,17 @@ db.once("open", () => {
     console.log("Database conected");
 })
 
-const app = express();
+const sample = array => Math.floor(Math.random() * 1000);
 
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+const seedDB = async () => {
+await Campground.insertMany({});
+for(let i = 0; i < 50; i++){
+    const random1000 = Math.floor(Math.random() * 1000);
+    new Campground({
+        location: `${cities[random1000].city, ${cities[andom1000].state}}`
+    })
+}
+}
 
-app.get('/', (req, res) => {
-    res.render('home')
-})
-
-
-app.get('/makecampground', async (req, res) =>{
-    const camp = new Campground({title: 'My backyard', price: 15, description: 'Cheep and ok camping'});
-    await camp.save();
-    res.send(camp)
-})
-
-
-app.listen(3000, () => {
-    console.log("Serving in port 3000")
-})
+seedDB();
