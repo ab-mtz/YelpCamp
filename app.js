@@ -48,7 +48,9 @@ app.get('/campgrounds/:id', async (req, res) =>{
      res.render('campgrounds/show', { campground });
  })
  
-
+app.get('/campgrounds/:id/edit', (req, res) => {
+    
+})
 
 app.listen(3000, () => {
     console.log("Serving in port 3000")
