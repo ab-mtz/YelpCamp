@@ -48,9 +48,15 @@ app.get('/campgrounds/new', (req, res) => {
         campground:  Joi.object({
             title: Joi.string().required(),
             price: Joi.number().required().min(0),
+            rimage: Joi.string().required(),
+            location: Joi.string().required(),
+            description: Joi.string().require()
         }).required()
     })
     const result = campgroundSchema.validate(req.body);
+    if(result.error){
+        throw new ExpressError(result.error.details, 400)
+    }
     console.log(result)
     const campground = new Campground(req.body.campground);
     await campground.save();
