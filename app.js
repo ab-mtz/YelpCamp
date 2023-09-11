@@ -34,7 +34,7 @@ app.use(methodOverride('_method'));
 
 const validateCampground = (req, res, next) => {
 
-const { error } = campgroundSchema.validate(req.body);
+    const { error } = campgroundSchema.validate(req.body);
     if(error){
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
@@ -42,11 +42,11 @@ const { error } = campgroundSchema.validate(req.body);
         next();
     }
     console.log(result)
-
 }
+
 // Middleware to reviews
 const validateReview = (req, res, next) => {
-    const {error} = reviewSchema.valid(req.body);
+    const {error} = reviewSchema.validate(req.body);
     if(error){
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
@@ -79,7 +79,7 @@ app.get('/campgrounds/new', (req, res) => {
  }))
  
 app.get('/campgrounds/:id', catchAsync(async (req, res) =>{
-    const campground = await Campground.findById(req.params.id);
+    const campground = await Campground.findById(req.params.id).populate('reviews');
      res.render('campgrounds/show', { campground });
  }))
  
